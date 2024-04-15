@@ -11,6 +11,15 @@ To address this issue, we simply map all portainer_data to a gluster volume. The
 
 # First Setup
 
+### Subdomain
+
+```text
+If you want to use traefik:
+Make sure that subdomain exist and points to manager of swarm.
+For Example: portainer.felicitas-wisdom.de
+```
+
+
 ##### Setup repo at desired location
 
 ```bash
@@ -30,6 +39,32 @@ vi .env
 ```
 
 # Deploy
+
+##### Option 1: Requires traefik
 ```bash
+# Allows you to access portainer using the url (PORTAINER_URL) provided in .env.
+# But requires you to have traefik set up.
+docker stack deploy -c <(docker-compose -f docker-compose-traefik.yml config) portainer
+```
+
+##### Option 2: Does not require traefik, uses default ports
+```bash
+# You can only call the dashboard using https://<MANAGER_IP_ADDRESS>:9443/.
 docker stack deploy -c <(docker-compose config) portainer
 ```
+
+
+# Log in
+##### Option 1: Using subdomain entered in .env / Requires traefik
+- Open Browser and enter https://portainer.felicitas-wisdom.de (the url set for PORTAINER_URL in .env)
+
+##### Option 2: Using IP Address and Port / Does not require traefik
+- Retrieve IP Address of -> MANAGER_IP_ADDRESS
+- Open Browser and enter https://<MANAGER_IP_ADDRESS>:9443/
+- In case of Errors: Ensure, that port 9443 is accessible
+
+
+
+# Initial Setup
+- [Log in](#log-in)
+- Follow instructions at https://docs.portainer.io/start/install-ce/server/setup

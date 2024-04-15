@@ -25,7 +25,16 @@ services:
       - ${DATA_ROOT}/portainer_data:/data
     networks:
       - agent_network
+      - traefik
     deploy:
+      labels:
+        - traefik.enable=true
+        - traefik.constraint-label=traefik-public
+        - traefik.http.services.portainer.loadbalancer.server.port=9000
+        - traefik.http.routers.portainer.rule=Host(`${PORTAINER_URL}`)
+        - traefik.http.routers.portainer.entrypoints=https,http,web
+        - traefik.http.routers.portainer.tls=true
+        - traefik.http.routers.portainer.tls.certresolver=le
       mode: replicated
       replicas: 1
       placement:
@@ -33,6 +42,10 @@ services:
 
 
 networks:
+
+  traefik:
+    external: true
+    
   agent_network:
     driver: overlay
     attachable: true
