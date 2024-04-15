@@ -1,0 +1,8 @@
+# Ignore data of portainer.
+portainer_data/*
+
+# Ignore config file.
+.env
+
+# Keep .gitkeep files to ensure that the empty folder should be created/ exists.
+!portainer_data/.gitkeep
