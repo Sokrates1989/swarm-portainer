@@ -44,13 +44,13 @@ vi .env
 ```bash
 # Allows you to access portainer using the url (PORTAINER_URL) provided in .env.
 # But requires you to have traefik set up.
-docker stack deploy -c <(docker-compose -f docker-compose-traefik.yml config) portainer
+docker stack deploy -c <(docker-compose -f config-stack-traefik.yml config) portainer
 ```
 
 ##### Option 2: Does not require traefik, uses default ports
 ```bash
 # You can only call the dashboard using https://<MANAGER_IP_ADDRESS>:9443/.
-docker stack deploy -c <(docker-compose config) portainer
+docker stack deploy -c <(docker-compose -f config-stack.yml config) portainer
 ```
 
 
